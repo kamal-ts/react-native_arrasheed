@@ -206,9 +206,6 @@ const Formulir = ({ route, navigation }) => {
                         onChangeText={(text) => settglLahir(text)}
                     /> */}
 
-                    {/* <Text>{text}</Text>
-                    <Button title='TimePicker' onPress={() => showMode('date')} />
-                    <Button title='TimePicker' onPress={() => showMode('time')} /> */}
                     {
                         Show && (
                             <DateTimePicker

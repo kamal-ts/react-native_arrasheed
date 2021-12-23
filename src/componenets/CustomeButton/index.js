@@ -43,7 +43,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         // backgroundColor: WarnaUtama,
 
-
     },
     text: {
 
