@@ -5,6 +5,9 @@ import Login from './Auth/Login'
 import Loading from './Auth/Loading'
 import Jemaah from './Jemaah'
 import Formulir from './Home/formulir'
-// import Item from './Home/item'
+import TentangHaji from './About/tentangHaji'
+import DaftarHaji from './About/daftarHaji'
+import KetentuanHaji from './About/ketentuanHaji'
+import tentangUmroh from './About/tentangUmroh'
 
-export { Akun, Home, About, Login, Loading, Jemaah, Formulir }
+export { Akun, Home, About, Login, Loading, Jemaah, Formulir, TentangHaji, DaftarHaji, KetentuanHaji, tentangUmroh }

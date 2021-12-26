@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { ScrollView, StyleSheet, Text, Combobox, TextInput, View, Platform, Button } from 'react-native'
+import { ScrollView, StyleSheet, Text, Combobox, TextInput, View, Platform, Button, Alert } from 'react-native'
 import { CustomeButton, Header } from '../../componenets'
 import { WarnaDark, WarnaSekunder, WarnaUtama } from '../../utils/constants'
 import { style } from '../../utils/Style'
@@ -7,12 +7,15 @@ import { Picker } from '@react-native-picker/picker';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import CostumeDate from '../../componenets/CustomeDate'
+import axios from 'axios'
+
 
 const Formulir = ({ route, navigation }) => {
 
 
     useEffect(() => {
         setData();
+        getJadwal();
         // deleteData();
     }, []);
 
@@ -80,7 +83,7 @@ const Formulir = ({ route, navigation }) => {
 
 
 
-    const [UkuranP, setUkuranP] = useState(['M', 'L', 'XL', 'XXL', '3XL', '4XL', '5XL']);
+    const [UkuranP, setUkuranP] = useState(['Pilih Ukuran', 'M', 'L', 'XL', 'XXL', '3XL', '4XL', '5XL']);
     const [SelectionUkuranP, setSelectionUkuranP] = useState([])
 
     // const [dataJemaah, setdataJemaah] = useState({
@@ -132,12 +135,54 @@ const Formulir = ({ route, navigation }) => {
     const [tglKembali, settglKembali] = useState()
 
 
+    const [ListJadwal, setListJadwal] = useState([]);
+    const [selectJadwal, setselectJadwal] = useState()
+
+
+    const getJadwal = () => {
+        axios.get('http://blackid.my.id/public/api_jadwal')
+            .then(function (response) {
+                setListJadwal(response.data);
+                console.log(response.data)
+
+            })
+            .catch(function (error) {
+                console.log(error)
+            });
+    }
+
+    const [Pesan, setPesan] = useState({
+        idPaket: '',
+        idJadwal: '',
+        noKtp: '',
+        noPaspor: '',
+        namaJemaah: '',
+        namaAyahKandung: '',
+        namaIbuKandung: '',
+        tempatLahir: '',
+        tglLahir: '',
+        alamatRumah: '',
+        kelurahan: '',
+        kota: '',
+        kodePos: '',
+        telponRumah: '',
+        telponMobile: '',
+        pekerjaan: '',
+        ukuranPakaian: '',
+        namaMahram: '',
+        email: '',
+        statusPerkawinan: '',
+        statusJemaah: '',
+        tglKembali: '',
+    })
+
+
 
     const postDataJemaah = () => {
 
         const dataForAPI = {
             idPaket: route.params.data.idPaket,
-            idJadwal: idJadwal,
+            idJadwal: selectJadwal,
             noKtp: noKtp,
             noPaspor: noPaspor,
             namaJemaah: namaJemaah,
@@ -160,7 +205,19 @@ const Formulir = ({ route, navigation }) => {
             tglKembali: tglKembali,
         }
 
+
+
         console.log(dataForAPI);
+
+        axios.post('http://blackid.my.id/public/api_jemaah', dataForAPI)
+            .then(function (response) {
+                console.log(response.data)
+
+            })
+            .catch(function (error) {
+                console.log(error.response.data)
+                setPesan(error.response.data.messages)
+            });
     }
 
     return (
@@ -178,24 +235,41 @@ const Formulir = ({ route, navigation }) => {
                         value={namaJemaah}
                         onChangeText={(text) => setnamaJemaah(text)}
                     />
+                    <Text style={{ color: '#FF1700' }}>
+                        {Pesan.namaJemaah}
+                    </Text>
+
                     <Text style={styles.label}>Nama Ayah Kandung</Text>
                     <TextInput style={[style.textInputL]}
                         placeholder="Masukkan Nama Ayah Kandung"
                         value={namaAyahKandung}
                         onChangeText={(text) => setnamaAyahKandung(text)}
                     />
+                    <Text style={{ color: '#FF1700' }}>
+                        {Pesan.namaAyahKandung}
+                    </Text>
+
+
                     <Text style={styles.label}>Nama Ibu Kandung</Text>
                     <TextInput style={[style.textInputL]}
                         placeholder="Masukkan Nama Ibu Kandung"
                         value={namaIbuKandung}
                         onChangeText={(text) => setnamaIbuKandung(text)}
                     />
+                    <Text style={{ color: '#FF1700' }}>
+                        {Pesan.namaIbuKandung}
+                    </Text>
+
                     <Text style={styles.label}>Tempat Lahir</Text>
                     <TextInput style={[style.textInputL]}
                         placeholder="Masukkan Tempat Lahir"
                         value={tempatLahir}
                         onChangeText={(text) => settempatLahir(text)}
                     />
+                    <Text style={{ color: '#FF1700' }}>
+                        {Pesan.tempatLahir}
+                    </Text>
+
                     <Text style={styles.label}>Tanggal Lahir</Text>
                     <CostumeDate TextColor={WarnaDark} placeholder={text} onPress={() => showMode('date')} />
 
@@ -218,6 +292,9 @@ const Formulir = ({ route, navigation }) => {
                             />
                         )
                     }
+                    <Text style={{ color: '#FF1700' }}>
+                        {Pesan.tglLahir}
+                    </Text>
 
                     <Text style={styles.label}>Ukuran Pakaian</Text>
                     <View style={[style.textInputL, { padding: 0 }]}>
@@ -237,6 +314,7 @@ const Formulir = ({ route, navigation }) => {
                             // style={{ height: 49 }}
 
                             selectedValue={SelectionUkuranP}
+
                             onValueChange={(itemValue) =>
                                 setSelectionUkuranP(itemValue)
                             }>
@@ -249,60 +327,155 @@ const Formulir = ({ route, navigation }) => {
 
                         </Picker>
                     </View>
-
-                    <Text style={styles.label}>Ukuran Pakaian</Text>
-                    <TextInput style={[style.textInputL]}
-                        placeholder="ukuran pakaian"
-                    />
+                    <Text style={{ color: '#FF1700' }}>
+                        {Pesan.ukuranPakaian}
+                    </Text>
 
                     <Text style={styles.label}>Nama Mahram</Text>
                     <TextInput style={[style.textInputL]}
                         placeholder="Nama Mahram"
+                        value={namaMahram}
+                        onChangeText={(text) => setnamaMahram(text)}
                     />
+                    <Text style={{ color: '#FF1700' }}>
+                        {Pesan.namaMahram}
+                    </Text>
+
                     <Text style={styles.label}>Status Perkawinan</Text>
                     <TextInput style={[style.textInputL]}
-                        placeholder="ukuran pakaian"
+                        placeholder="status perkawinanan"
+                        value={statusPerkawinan}
+                        onChangeText={(text) => setstatusPerkawinan(text)}
                     />
+                    <Text style={{ color: '#FF1700' }}>
+                        {Pesan.statusPerkawinan}
+                    </Text>
 
                     <Text style={styles.heading}>Contact Information</Text>
 
                     <Text style={styles.label}>No. KTP</Text>
                     <TextInput style={[style.textInputL]}
                         placeholder="Masukkan Nomor KTP"
+                        value={noKtp}
+                        onChangeText={(text) => setnoKtp(text)}
                     />
+                    <Text style={{ color: '#FF1700' }}>
+                        {Pesan.noKtp}
+                    </Text>
+
                     <Text style={styles.label}>No. Paspor</Text>
                     <TextInput style={[style.textInputL]}
+                        placeholder='Masukan nomor paspor'
+                        value={noPaspor}
+                        onChangeText={(text) => setnoPaspor(text)}
                     />
+                    <Text style={{ color: '#FF1700' }}>
+                        {Pesan.noPaspor}
+                    </Text>
+
                     <Text style={styles.label}>Alamat Rumah</Text>
-                    <TextInput style={[style.textInputL]}
+                    <TextInput style={[style.textArea]}
                         placeholder="Masukkan Alamat Rumah"
+                        multiline={true}
+                        numberOfLines={4}
+                        value={alamatRumah}
+                        onChangeText={(text) => setalamatRumah(text)}
                     />
+                    <Text style={{ color: '#FF1700' }}>
+                        {Pesan.alamatRumah}
+                    </Text>
+
                     <Text style={styles.label}>Kelurahan</Text>
-                    <TextInput style={[style.textInputL]}
+                    <TextInput style={[style.textArea]}
                         placeholder="kelurahan"
+                        multiline={true}
+                        numberOfLines={4}
+                        value={kelurahan}
+                        onChangeText={(text) => setkelurahan(text)}
                     />
+                    <Text style={{ color: '#FF1700' }}>
+                        {Pesan.kelurahan}
+                    </Text>
+
                     <Text style={styles.label}>Kota</Text>
                     <TextInput style={[style.textInputL]}
                         placeholder="kota"
+                        value={kota}
+                        onChangeText={(text) => setkota(text)}
                     />
+                    <Text style={{ color: '#FF1700' }}>
+                        {Pesan.kota}
+                    </Text>
+
                     <Text style={styles.label}>Kode Pos</Text>
                     <TextInput style={[style.textInputL]}
                         placeholder="kode Pos"
+                        value={kodePos}
+                        onChangeText={(text) => setkodePos(text)}
                     />
+                    <Text style={{ color: '#FF1700' }}>
+                        {Pesan.kodePos}
+                    </Text>
+
                     <Text style={styles.label}>Telpon Rumah</Text>
                     <TextInput style={[style.textInputL]}
                         placeholder="Telpon Rumah"
+                        value={telponRumah}
+                        onChangeText={(text) => settelponRumah(text)}
                     />
+                    <Text style={{ color: '#FF1700' }}>
+                        {Pesan.telponRumah}
+                    </Text>
+
                     <Text style={styles.label}>Telpon Mobile</Text>
                     <TextInput style={[style.textInputL]}
                         placeholder="Telpon Mobile"
+                        value={telponMobile}
+                        onChangeText={(text) => settelponMobile(text)}
                     />
+                    <Text style={{ color: '#FF1700' }}>
+                        {Pesan.telponMobile}
+                    </Text>
+
                     <Text style={styles.label}>Pekerjaan</Text>
                     <TextInput style={[style.textInputL]}
                         placeholder="pekerjaan"
+                        value={pekerjaan}
+                        onChangeText={(text) => setpekerjaan(text)}
                     />
-                    <View style={{ marginVertical: 30 }}>
+                    <Text style={{ color: '#FF1700' }}>
+                        {Pesan.pekerjaan}
+                    </Text>
 
+                    {route.params.data.kategori == 'umroh' && (
+                        <View>
+                            <Text style={styles.label}>Jadwal Perjalanan</Text>
+                            <View style={[style.textInputL, { padding: 0 }]}>
+
+                                <Picker
+
+                                    selectedValue={selectJadwal}
+
+                                    onValueChange={(itemValue) =>
+                                        setselectJadwal(itemValue)
+                                    }>
+
+                                    <Picker.Item label={'Pilih Jadwal'} value={'Pilih Jadwal'} />
+                                    {
+                                        ListJadwal.map((up, index) => (
+                                            <Picker.Item key={index} label={up.namaPesawat + ", " + up.tgl + " (" + up.jam + ")" + ", Sisa Kuota : " + up.slotKosong} value={up.idJadwal} />
+
+                                        ))
+                                    }
+
+                                </Picker>
+                            </View>
+                            <Text style={{ color: '#FF1700' }}>
+                                {Pesan.idJadwal}
+                            </Text>
+                        </View>
+                    )}
+                    <View style={{ marginVertical: 30 }}>
                         <CustomeButton text='DAFTAR' color={WarnaUtama} onPress={postDataJemaah} textColor={WarnaSekunder} />
                     </View>
                 </View>

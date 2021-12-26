@@ -9,6 +9,6 @@ import Logo3 from './logo3.png'
 import Logo4 from './logo4.png'
 import Logo1 from './logo1.png'
 import Calendar from './calendar.svg'
+import ChevronDown from './chevron-down.svg'
 
-
-export { IconAbout, IconAbout1, IconAkun, IconAkun1, IconHome, IconHome1, Logo, Logo1, Logo3, Logo4, Calendar }
+export { IconAbout, IconAbout1, IconAkun, IconAkun1, IconHome, IconHome1, Logo, Logo1, Logo3, Logo4, Calendar, ChevronDown }

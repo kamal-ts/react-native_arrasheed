@@ -2,47 +2,62 @@ import { StyleSheet } from 'react-native'
 import { WarnaDark, WarnaUtama } from './constants'
 
 export const style = StyleSheet.create({
-    viewWrapper:{
-        flex:1,
+    viewWrapper: {
+        flex: 1,
         backgroundColor: '#FFFFFF'
-        
-    },
-    
-    viewForm:{
-        flex:2, 
-        padding:30
+
     },
 
-    viewData:{
-        flex:4,
+    viewForm: {
+        flex: 2,
+        padding: 30
+    },
+
+    viewData: {
+        flex: 4,
         backgroundColor: ''
     },
-    
-    textInput:{
-        marginVertical:10,
-        padding:10,
-        fontSize:15,
-        borderRadius:8, 
-        borderWidth:1,
-        borderColor:'#CCCCCC',
-        marginBottom:10,
-        backgroundColor:'#dedede'
+
+    textInput: {
+        marginVertical: 10,
+        padding: 10,
+        fontSize: 15,
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: '#CCCCCC',
+        marginBottom: 10,
+        backgroundColor: '#dedede'
     },
-    textInputL:{
+    textInputL: {
         // marginVertical:10,
-        padding:10,
+        padding: 10,
         height: 56,
-        fontSize:16,
-        borderRadius:5, 
-        borderWidth:1,
-        borderColor:'#CCCCCC',
+        fontSize: 16,
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: '#CCCCCC',
         // marginBottom:20,
-        backgroundColor:'#FFFFFF'
+        backgroundColor: '#FFFFFF'
     },
-    viewList:{
-        flexDirection:'row',
-        padding:20, 
-        backgroundColor : WarnaDark,
+    textArea: {
+        // marginVertical:10,
+        borderWidth: 1,
+        // marginHorizontal: 10,
+        borderRadius: 5,
+        
+        padding: 10,
+        
+        fontSize: 16,
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: '#CCCCCC',
+        // marginBottom:20,
+        backgroundColor: '#FFFFFF'
+    },
+    viewList: {
+        flexDirection: 'row',
+        padding: 20,
+        backgroundColor: WarnaDark,
         // borderWidth:1,
         // borderColor: WarnaUtama,
         marginBottom: 16,
@@ -54,7 +69,7 @@ export const style = StyleSheet.create({
         elevation: 9,
     },
 
-    textLispaket:{
+    textLispaket: {
         fontSize: 18,
         fontWeight: '600',
         marginBottom: 1,
@@ -67,14 +82,14 @@ export const style = StyleSheet.create({
 
     },
 
-    cardImage:{
-        width:'100%',
-        height:100,
-        resizeMode:'cover',
-        
+    cardImage: {
+        width: '100%',
+        height: 100,
+        resizeMode: 'cover',
+
 
     },
-    
+
 
 
     // ///

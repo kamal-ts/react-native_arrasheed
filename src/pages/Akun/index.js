@@ -1,8 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import React, { useEffect, useState } from 'react'
-import { Alert, Button, StyleSheet, Text, View } from 'react-native'
+import { Alert, Button, StyleSheet, Text, Image, View } from 'react-native'
 import { CustomeButton, Header } from '../../componenets'
-import { WarnaSekunder, WarnaUtama } from '../../utils/constants'
+import { WarnaDark, WarnaSekunder, WarnaUtama } from '../../utils/constants'
+import { style } from '../../utils/Style'
 
 const Akun = ({ navigation }) => {
 
@@ -60,30 +61,35 @@ const Akun = ({ navigation }) => {
             ]
         );
     return (
-        <View style={styles.page}>
+        <View style={style.viewWrapper}>
             <Header />
-            <View style={[styles.card, styles.shadowProp]}>
-                <View>
-                    <Text style={styles.heading}>
-                        {User.email}
-                    </Text>
-                    <Text style={styles.heading}>
-                        {User.name}
-                    </Text>
-                    <Text style={styles.heading}>
-                        {User.idJemaah}
-                    </Text>
-                    <Text style={styles.heading}>
-                        {User.image}
-                    </Text>
+            <View style={[styles.card]}>
+                <View style={styles.avatar}>
+                    <Image style={{width: 100, height: 100}} source={{
+                        uri: 'http://blackid.my.id/public/img/'+User.image,
+                    }} />
                 </View>
+                <Text style={styles.heading}>
+                    {User.email}
+                </Text>
+                <Text style={styles.heading}>
+                    {User.name}
+                </Text>
+                {/* <Text style={styles.heading}>
+                    {User.idJemaah}
+                </Text> */}
+                {/* <Text style={styles.heading}>
+                    {User.image}
+                </Text> */}
                 {/* <Text>
                     Using the elevation style prop to apply box-shadow for iOS devices
                 </Text> */}
 
                 {/* <Button title='Logout'/> */}
+                <View style={{marginVertical: 30}}>
+                <CustomeButton text='Logout' color={WarnaDark} textColor={'#FFFFFF'} onPress={logout} />
 
-                <CustomeButton text='Logout' color={WarnaUtama} onPress={logout} />
+                </View>
             </View>
         </View>
     )
@@ -92,10 +98,6 @@ const Akun = ({ navigation }) => {
 export default Akun
 
 const styles = StyleSheet.create({
-    page: {
-        flex: 1,
-        backgroundColor: '#F1F1F1'
-    },
 
     heading: {
         fontSize: 18,
@@ -118,4 +120,8 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.5,
         elevation: 3,
     },
+    avatar: {
+        alignItems: 'center',
+        marginBottom:  30,
+    }
 })
