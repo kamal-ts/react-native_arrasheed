@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { ScrollView, StyleSheet, Text, Combobox, TextInput, View, Platform, Button, Alert } from 'react-native'
-import { CustomeButton, Header } from '../../componenets'
+import { CustomeButton, Header, CustomeDate } from '../../componenets'
 import { WarnaDark, WarnaSekunder, WarnaUtama } from '../../utils/constants'
 import { style } from '../../utils/Style'
 import { Picker } from '@react-native-picker/picker';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import DateTimePicker from '@react-native-community/datetimepicker'
-import CostumeDate from '../../componenets/CustomeDate'
+// import CostumeDate from '../../componenets/CustomeDate'
 import axios from 'axios'
 
 
@@ -131,7 +131,7 @@ const Formulir = ({ route, navigation }) => {
     const [namaMahram, setnamaMahram] = useState()
     const [email, setemail] = useState()
     const [statusPerkawinan, setstatusPerkawinan] = useState()
-    const [statusJemaah, setstatusJemaah] = useState()
+    const [statusJemaah, setstatusJemaah] = useState('Belum Lunas')
     const [tglKembali, settglKembali] = useState()
 
 
@@ -221,7 +221,7 @@ const Formulir = ({ route, navigation }) => {
     }
 
     return (
-        <View style={style.viewWrapper}>
+        <View style={[style.viewWrapper, {backgroundColor: '#FFFFFF'}]}>
             <ScrollView>
 
                 <View style={{ marginHorizontal: 20 }}>
@@ -271,7 +271,7 @@ const Formulir = ({ route, navigation }) => {
                     </Text>
 
                     <Text style={styles.label}>Tanggal Lahir</Text>
-                    <CostumeDate TextColor={WarnaDark} placeholder={text} onPress={() => showMode('date')} />
+                    <CustomeDate TextColor={WarnaDark} placeholder={text} onPress={() => showMode('date')} />
 
                     {/* <Text style={styles.label}>Tanggal Lahir</Text>
                     <TextInput style={[style.textInputL]}

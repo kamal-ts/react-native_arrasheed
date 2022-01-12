@@ -41,7 +41,9 @@ const Home = ({ navigation }) => {
     }
 
 
-
+    const Profile = () => {
+        navigation.navigate('Profile')
+    }
 
     const selectItem = (val) => {
         navigation.navigate('Formulir', { data: val })
@@ -67,7 +69,7 @@ const Home = ({ navigation }) => {
 
     return (
         <View style={style.viewWrapper}>
-            <Header />
+            <Header onPress={Profile} UserN={''} />
             <View style={style.viewData}>
                 <ScrollView>
 

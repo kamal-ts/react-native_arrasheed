@@ -2,10 +2,17 @@ import { StyleSheet } from 'react-native'
 import { WarnaDark, WarnaUtama } from './constants'
 
 export const style = StyleSheet.create({
+
     viewWrapper: {
         flex: 1,
-        backgroundColor: '#FFFFFF'
+        backgroundColor: '#F3F3F3'
 
+    },
+
+    container:{
+        backgroundColor: '#FFFFFF',
+        marginHorizontal: 20,
+        marginVertical: 25,
     },
 
     viewForm: {
@@ -28,6 +35,7 @@ export const style = StyleSheet.create({
         marginBottom: 10,
         backgroundColor: '#dedede'
     },
+
     textInputL: {
         // marginVertical:10,
         padding: 10,
@@ -37,8 +45,9 @@ export const style = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#CCCCCC',
         // marginBottom:20,
-        backgroundColor: '#FFFFFF'
+        // backgroundColor: '#FFFFFF'
     },
+    
     textArea: {
         // marginVertical:10,
         borderWidth: 1,
@@ -54,6 +63,7 @@ export const style = StyleSheet.create({
         // marginBottom:20,
         backgroundColor: '#FFFFFF'
     },
+    
     viewList: {
         flexDirection: 'row',
         padding: 20,
@@ -79,7 +89,6 @@ export const style = StyleSheet.create({
         // textDecorationLine: 'underline',
 
         // fontFamily : 'Poppins',
-
     },
 
     cardImage: {
@@ -87,9 +96,13 @@ export const style = StyleSheet.create({
         height: 100,
         resizeMode: 'cover',
 
-
     },
-
+    shadowProp: {
+        shadowOffset: { width: -2, height: 10 },
+        shadowColor: 'black',
+        shadowOpacity: 0.5,
+        elevation: 8,
+    },
 
 
     // ///

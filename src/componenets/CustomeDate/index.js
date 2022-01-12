@@ -3,7 +3,7 @@ import { StyleSheet, TouchableOpacity, Text, TextInput, View } from 'react-nativ
 import { Calendar } from '../../assets'
 import { WarnaUtama } from '../../utils/constants'
 
-export default function CostumeDate({ placeholder, onPress, TextColor }) {
+export default function CustomeDate({ placeholder, onPress, TextColor }) {
     return (
 
         // <View style={styles.body}>
