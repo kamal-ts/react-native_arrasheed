@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Alert, Button, Image, StyleSheet, Text, TextInput, View, useWindowDimensions } from 'react-native'
-import { WarnaSekunder, WarnaUtama } from '../../utils/constants'
+import { Alert, Button, Image, StyleSheet, Text, TextInput, View, useWindowDimensions, TouchableOpacity } from 'react-native'
+import { WarnaDark, WarnaSekunder, WarnaUtama } from '../../utils/constants'
 import { style } from '../../utils/Style'
 import { CustomeButton, Header } from '../../componenets'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
-import { Logo, Logo3, Logo4 } from '../../assets'
+import { IconEmail, IconPass, Logo, Logo3, Logo4 } from '../../assets'
 
 // const login = ({navigation}) => {
 const login = ({ navigation }) => {
@@ -86,6 +86,10 @@ const login = ({ navigation }) => {
 
     }
 
+    const register = () => {
+        navigation.navigate('Register')
+    }
+
     return (
         <View style={styles.body}>
             <View style={styles.bodyImage}>
@@ -100,10 +104,17 @@ const login = ({ navigation }) => {
                     </Text> */}
 
                     <View style={{ marginBottom: 10 }}>
-                        <TextInput style={[style.textInputL]}
-                            placeholder="Masukkan Email"
-                            value={Email}
-                            onChangeText={(text) => setEmail(text)} />
+                        <View style={[styles.textInput, { flexDirection: 'row', alignItems: 'center' }]}>
+                            <View style={{ flex: 1, marginHorizontal: 5 }}>
+
+                                <IconEmail />
+                            </View>
+                            <TextInput style={{ paddingVertical: 10, height: 56, fontSize: 16, flex: 10 }}
+                                keyboardType='email-address'
+                                placeholder="Masukkan Email"
+                                value={Email}
+                                onChangeText={(text) => setEmail(text)} />
+                        </View>
 
                         <Text style={{ color: '#FF1700' }}>
                             {Pesan.email}
@@ -111,11 +122,17 @@ const login = ({ navigation }) => {
                     </View>
 
                     <View style={{ marginBottom: 10 }}>
-                        <TextInput style={[style.textInputL]}
-                            placeholder="Masukkan Password"
-                            value={Password}
-                            onChangeText={(text) => setPassword(text)}
-                            secureTextEntry={true} />
+                        <View style={[styles.textInput, { flexDirection: 'row', alignItems: 'center' }]}>
+                            <View style={{ flex: 1, marginHorizontal: 5 }}>
+
+                                <IconPass />
+                            </View>
+                            <TextInput style={{ paddingVertical: 10, height: 56, fontSize: 16, flex: 10 }}
+                                placeholder="Masukkan Password"
+                                value={Password}
+                                onChangeText={(text) => setPassword(text)}
+                                secureTextEntry={true} />
+                        </View>
                         {/* {Pesan.password != '' && ( */}
                         <Text style={{ color: '#FF1700' }}>
                             {Pesan.password}
@@ -123,12 +140,21 @@ const login = ({ navigation }) => {
                         {/* )} */}
                     </View>
 
-                    <View style={{ marginBottom: 30 }}>
+                    {/* <View style={{ marginBottom: 30 }}> */}
 
-                        <CustomeButton text='Login' color={WarnaUtama} onPress={postData} textColor={WarnaSekunder} />
+                    <CustomeButton PaddingV={16} border={30} text='Login' color={WarnaUtama} onPress={postData} textColor={WarnaSekunder} borderWidth={1} borderColor={'#FFFFFF'} />
+                    {/* </View> */}
+
+                    <Text style={{ textAlign: 'center', marginVertical: 5, fontWeight: 'bold' }}>or</Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                        {/* <View style={{flex: 10}}> */}
+                        <Text style={{ fontSize: 16 }}>Don`t have an account? </Text>
+                        {/* </View> */}
+                        <TouchableOpacity onPress={() => register()} >
+                            <Text style={{ fontSize: 17, fontWeight: 'bold' }}>Sign Up</Text>
+                        </TouchableOpacity>
                     </View>
 
-                    <CustomeButton text='Register' color={WarnaSekunder} textColor={'#99A799'} />
 
                 </View>
             </View>
@@ -183,6 +209,14 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.5,
         elevation: 3,
     },
+    textInput: {
+        padding: 10,
+        height: 56,
+        fontSize: 16,
+        borderRadius: 30,
+        borderWidth: 1,
+        borderColor: WarnaUtama,
+    }
 
 
 

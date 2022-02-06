@@ -23,8 +23,9 @@ import React, {useEffect, useState} from 'react'
 import { StyleSheet, TouchableOpacity, Text, View } from 'react-native'
 import { WarnaUtama } from '../../utils/constants'
 
-export default function CustomeButton({ text, onPress, color, textColor, borderColor, borderWidth, PaddingV }) {
+export default function CustomeButton({ text, onPress, color, textColor, borderColor, borderWidth, PaddingV, border }) {
 
+    const [borderRadius, setborderRadius] = useState()
     const [PaddingVertical, setPaddingVertical] = useState()
 
     useEffect(() => {
@@ -34,11 +35,18 @@ export default function CustomeButton({ text, onPress, color, textColor, borderC
         else{
             setPaddingVertical(18);
         }
+
+        if (PaddingV != undefined) {
+            setborderRadius(border);
+        }
+        else{
+            setborderRadius(5);
+        }
     }, []);
 
     return (
         <TouchableOpacity onPress={onPress}>
-            <View style={[styles.button, { paddingVertical: PaddingVertical, backgroundColor: color, borderWidth: borderWidth, borderColor: borderColor}]}>
+            <View style={[styles.button, { paddingVertical: PaddingVertical, backgroundColor: color, borderWidth: borderWidth, borderColor: borderColor, borderRadius: borderRadius,}]}>
                 <Text style={[styles.text, { color: textColor}]}>{text}</Text>
 
             </View>
@@ -50,7 +58,7 @@ export default function CustomeButton({ text, onPress, color, textColor, borderC
 
 const styles = StyleSheet.create({
     button: {
-        borderRadius: 5,
+        
         
         paddingHorizontal: 10
         

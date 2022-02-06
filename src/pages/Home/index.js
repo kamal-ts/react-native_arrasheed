@@ -75,7 +75,6 @@ const Home = ({ navigation }) => {
 
                     <View>
                         <Text style={styles.heading}>- PAKET HAJI & UMROH -</Text>
-
                     </View>
 
                     {Error == 'Error' && (
@@ -153,10 +152,10 @@ const Item = ({ namaPaket, kategori, description, hargaDaftar, onPress }) => {
         <TouchableOpacity style={style.viewList} onPress={onPress}>
             <View>
                 <Text style={style.textLispaket} >{namaPaket.toUpperCase()}</Text>
-                <Text style={{ color: WarnaSekunder }}>
+                {/* <Text style={{ color: WarnaSekunder }}>
                     {description}
-                </Text>
-                <Text style={{ color: WarnaSekunder, fontSize: 15, fontWeight: "bold", marginTop: 2 }}>
+                </Text> */}
+                <Text style={{ color: WarnaSekunder, fontSize: 20, fontWeight: "bold", marginTop: 7 }}>
 
                     Estimasi :
                     {kategori == 'umroh' ? ' Rp. ' : ' USD. '}

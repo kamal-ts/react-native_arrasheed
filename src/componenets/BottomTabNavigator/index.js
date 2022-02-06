@@ -60,8 +60,11 @@ const styles = StyleSheet.create({
         justifyContent : 'space-between',
         paddingHorizontal : 30,
         paddingVertical : 10,
-        // borderTopRightRadius : 20,
-        // borderTopLeftRadius : 20,
+        borderTopRightRadius : 20,
+        borderTopLeftRadius : 20,
+        
+        
+
         
     }
 })

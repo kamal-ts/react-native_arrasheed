@@ -13,10 +13,18 @@ import ChevronDown from './chevron-down.svg'
 import Profile from './Profile.svg'
 import Book from './book.svg'
 import Tambah from './tambah.svg'
-import IconPembayaran from './pembayaran.svg'
 import IconDetail from './detail.svg'
-import IconDokumen from './dokumen.svg'
 import IconConfirm from './confirm.svg'
+
+import IconPembayaran from './pembayaran.svg'
+import IconPembayaran1 from './pembayaran1.svg'
+import IconDokumen from './dokumen.svg'
+import IconDokumen1 from './dokumen1.svg'
+import IconEmail from './email.svg'
+import IconPass from './pass.svg'
+
+import User from './user.svg'
+
 
 export {
     Tambah,
@@ -34,8 +42,13 @@ export {
     Logo4, 
     Calendar, 
     ChevronDown,
-    IconPembayaran,
     IconDetail,
-    IconDokumen,
     IconConfirm,
+    IconPembayaran,
+    IconPembayaran1,
+    IconDokumen,
+    IconDokumen1,
+    IconPass,
+    IconEmail,
+    User
 }

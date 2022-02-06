@@ -1,4 +1,5 @@
 import BottomTabNavigator from './BottomTabNavigator';
+import BottomTabNavigator2 from './BottomTabNavigator';
 import Header from './Header'
 import CustomeButton from './CustomeButton'
 import CustomeDate from './CustomeDate'
@@ -12,6 +13,7 @@ import Loading from './Loading';
 export {
     CustomeListData,
     BottomTabNavigator, 
+    BottomTabNavigator2, 
     Header, 
     CustomeButton, 
     CustomeDate, 

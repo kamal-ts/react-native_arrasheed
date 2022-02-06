@@ -18,7 +18,7 @@ const Loading = ({ navigation }) => {
                         let user = JSON.parse(value);
                         
                         if(user.idJemaah != null){
-                            navigation.replace('Jemaah', { data: user })
+                            navigation.replace('JemaahApp', { data: user })
                         }else{
                             navigation.replace('MainApp')
 

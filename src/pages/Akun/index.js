@@ -41,7 +41,11 @@ const Akun = ({ navigation }) => {
 
         try {
             await AsyncStorage.clear();
-            navigation.replace('Login')
+            // navigation.replace('Loading')
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'Loading' }],
+            });
         } catch (error) {
             console.error();
         }
@@ -69,7 +73,7 @@ const Akun = ({ navigation }) => {
                         uri: 'http://blackid.my.id/public/img/' + User.image,
                     }} />
                 </View>
-                <View style={{alignItems: 'center'}}>
+                <View style={{ alignItems: 'center' }}>
 
                     <Text style={styles.heading}>
                         {User.email}
@@ -90,7 +94,7 @@ const Akun = ({ navigation }) => {
 
                 {/* <Button title='Logout'/> */}
                 <View style={{ marginVertical: 30 }}>
-                    <CustomeButton  text='Logout' color={'#FFFFFF'} textColor={WarnaUtama} onPress={logout} borderWidth={2} borderColor={WarnaUtama} PaddingV={10} />
+                    <CustomeButton border={20} text='Logout' color={'#FFFFFF'} textColor={WarnaUtama} onPress={logout} borderWidth={2} borderColor={WarnaUtama} PaddingV={10} />
 
                 </View>
             </View>

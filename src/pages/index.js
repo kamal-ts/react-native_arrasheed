@@ -14,7 +14,9 @@ import Profile from './Profile'
 import DetailJemaah from './Jemaah/DetailJemaah'
 import Pembayaran from './Jemaah/Pembayaran'
 import FormPembayaran from './Jemaah/FormPembayaran'
+import FormDokumen from './Jemaah/FormDokumen'
 import DokumenPersyaratan from './Jemaah/DokumenPersyaratan'
+import Register from './Auth/Register'
 
 export {
     Profile,
@@ -34,5 +36,7 @@ export {
     Pembayaran,
     FormPembayaran,
     DokumenPersyaratan,
+    FormDokumen,
+    Register
 
 }

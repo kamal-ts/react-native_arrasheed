@@ -1,12 +1,10 @@
 import React from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import { IconAkun, Logo, Profile } from '../../assets'
-import { WarnaDark } from '../../utils/constants'
-import { style } from '../../utils/Style'
+import { Logo } from '../../assets'
 
-const Header = ({onPress, UserN}) => {
+const Header = ({ onPress, UserN }) => {
 
-    
+
 
     return (
         <View style={styles.container}>
@@ -14,7 +12,7 @@ const Header = ({onPress, UserN}) => {
             <Logo />
             <TouchableOpacity onPress={onPress} style={styles.profile}>
                 <Text style={styles.username}>{UserN}</Text>
-                <Profile/>
+
             </TouchableOpacity>
         </View>
     )
@@ -36,11 +34,11 @@ const styles = StyleSheet.create({
         // elevation: 9,
 
     },
-    profile:{
+    profile: {
         flexDirection: 'row',
         // justifyContent: 'space-between',
     },
-    username:{
+    username: {
         fontSize: 15,
         marginHorizontal: 10,
 

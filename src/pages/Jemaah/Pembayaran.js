@@ -1,17 +1,18 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, Button } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, Button, Alert } from 'react-native'
 import { Book, IconConfirm, IconHome, Tambah } from '../../assets'
 import { CustomeButton, Header } from '../../componenets'
 import { WarnaDark, WarnaUtama } from '../../utils/constants'
 import { style } from '../../utils/Style'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import Jemaah from '.'
 
 const Pembayaran = ({ route, navigation }) => {
 
     useEffect(() => {
-        // setData();
-        getData();
+        setData();
+        // getData();
 
     }, []);
 
@@ -19,18 +20,68 @@ const Pembayaran = ({ route, navigation }) => {
 
     const [getPembayaran, setGetPembayaran] = useState([])
 
-    const getData = () => {
+    const [User, setUser] = useState({
+        idJemaah: '',
+        name: '',
+        email: '',
+        image: ''
 
-        // setError('');
-        const url = 'http://blackid.my.id/public/api_pembayaran/' + route.params.data.idJemaah;
+    });
 
-        axios.get(url)
+
+    const setData = async () => {
+        try {
+            AsyncStorage.getItem('UserData')
+                .then(value => {
+                    if (value != null) {
+                        let user = JSON.parse(value);
+                        setUser(user);
+                        // setError('');
+                        const url = 'http://blackid.my.id/public/api_pembayaran/' + user.idJemaah;
+
+                        axios.get(url)
+                            .then(res => {
+                                // console.log('res: ', res.data);
+
+                                console.log(res.data.totalBayar);
+                                setGetPembayaran(res.data.data)
+                                // console.log('paket: ', Paket);
+                            })
+                            .catch(function (error) {
+                                // setError('Error')
+
+                                // Alert.alert(
+                                //     "No Internet",
+                                //     "No Internet connection found Please try again",
+                                //     [
+                                //         { text: "OK", onPress: () => setError('Error') }
+                                //     ]
+                                // );
+                            });
+
+                    }
+                })
+
+        } catch (error) {
+
+        }
+    }
+
+    const deleteData = (idBukti) => {
+
+        const url = 'http://blackid.my.id/public/api_pembayaran/' + idBukti;
+
+        axios.delete(url)
             .then(res => {
-                // console.log('res: ', res.data);
-
-                console.log(res.data.totalBayar);
-                setGetPembayaran(res.data.data)
-                // console.log('paket: ', Paket);
+                console.log(res.data);
+                setData()
+                Alert.alert(
+                    "SUKSES",
+                    "Data Berhasil Dihapus",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed")}
+                    ]
+                );
             })
             .catch(function (error) {
                 // setError('Error')
@@ -44,6 +95,22 @@ const Pembayaran = ({ route, navigation }) => {
                 // );
             });
 
+    }
+
+    const getDelete = (idBukti) => {
+
+        Alert.alert(
+            "DELETE",
+            "Anda yakin akan menghapus data?",
+            [
+                {
+                    text: "Cancel",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                },
+                { text: "OK", onPress: () => deleteData(idBukti)}
+            ]
+        );
     }
 
 
@@ -77,7 +144,7 @@ const Pembayaran = ({ route, navigation }) => {
     }
 
     const formPembayaran = () => {
-        navigation.navigate('FormPembayaran', { idJemaah: route.params.data.idJemaah })
+        navigation.navigate('FormPembayaran', { idJemaah: User.idJemaah })
     }
 
     return (
@@ -87,7 +154,7 @@ const Pembayaran = ({ route, navigation }) => {
             <ScrollView>
                 <View style={{ alignItems: 'flex-start', marginHorizontal: 20, marginVertical: 20 }}>
 
-                    <TouchableOpacity style={styles.button} onPress={() => formPembayaran()}>
+                    <TouchableOpacity style={[styles.button, style.shadowProp]} onPress={() => formPembayaran()}>
                         <View style={{ marginRight: 10 }}>
                             <Tambah />
                         </View>
@@ -107,7 +174,7 @@ const Pembayaran = ({ route, navigation }) => {
                             <View key={Home} style={[style.shadowProp, {
                                 // borderWidth: 1,
                                 // borderColor: WarnaDark,
-                                borderRadius: 5,
+                                borderRadius: 10,
                                 paddingHorizontal: 20,
                                 paddingVertical: 15,
                                 // marginVertical: 10,
@@ -125,28 +192,16 @@ const Pembayaran = ({ route, navigation }) => {
                                         </View>
 
                                         {val.statusPembayaran != 'konfirmasi' && (
+                                            <View style={{ marginRight: 3 }}>
 
-                                            <View style={{ flex: 3, marginRight: 3 }}>
-                                                <TouchableOpacity>
-                                                    <View style={[styles.buttonSm, { borderColor: WarnaUtama }]}>
-                                                        <Text style={{
-                                                            color: WarnaUtama,
-                                                            fontWeight: 'bold',
-
-                                                        }}>UBAH</Text>
-                                                    </View>
-                                                </TouchableOpacity>
-                                            </View>
-                                        )}
-                                        {val.statusPembayaran != 'konfirmasi' && (
-                                            <View style={{ flex: 3, marginRight: 3 }}>
-
-                                                <TouchableOpacity>
+                                                <TouchableOpacity onPress={() => getDelete(val.idBukti)}>
                                                     <View style={styles.buttonSm}>
                                                         <Text style={{
                                                             color: 'red',
-                                                            fontWeight: 'bold',
-                                                        }}>HAPUS</Text>
+                                                            // fontWeight: 'bold',
+                                                            fontSize: 16
+                                                            
+                                                        }}>Hapus</Text>
                                                     </View>
                                                 </TouchableOpacity>
                                             </View>
@@ -158,7 +213,7 @@ const Pembayaran = ({ route, navigation }) => {
                                                 alignItems: 'center',
 
                                             }}>
-                                                <View style={{marginTop: 2}}>
+                                                <View style={{ marginTop: 2 }}>
 
                                                     <IconConfirm />
                                                 </View>
@@ -167,12 +222,22 @@ const Pembayaran = ({ route, navigation }) => {
                                         )}
                                     </View>
                                     <List head={'No. Rekening'} title={val.noRek} />
+                                    {/* <List head={'id bukti'} title={val.idBukti} /> */}
                                     <List head={'Pemilik Rekening'} title={val.pemilikRek} />
-                                    <List head={'Jumlah Bayar'} title={convertToRupiah(val.jumlahBayar) + '$ USD'} />
+                                    {val.kategori == 'haji' && (
+                                        
+                                        <List head={'Jumlah Bayar'} title={convertToRupiah(val.jumlahBayar) + '$ USD'} />
+                                    )
+                                    }
+                                    {val.kategori != 'haji' && (
+                                        
+                                        <List head={'Jumlah Bayar'} title={'Rp. '+convertToRupiah(val.jumlahBayar)} />
+                                    )
+                                    }
                                     <List head={'Tanggal Transfer'} title={val.tglTransfer} />
                                     <List head={'Bank Tujuan'} title={val.bankTujuan} />
                                     <View style={{ marginTop: 10 }} >
-                                        <Image style={{ width: 100, height: 100 }} source={{
+                                        <Image style={{ width: '100%', height: 300 }} source={{
                                             uri: 'http://blackid.my.id/public/img/' + val.gambarStruk,
                                         }} />
 
@@ -219,12 +284,14 @@ const styles = StyleSheet.create({
 
     button: {
 
-        backgroundColor: '#12a4d9',
+        backgroundColor: WarnaDark,
         padding: 10,
         paddingHorizontal: 20,
         flexDirection: 'row',
         alignItems: 'center',
-        borderRadius: 5,
+        borderRadius: 10,
+        borderWidth: 2,
+        borderColor: '#FFFFFF'
     },
     textButton: {
         fontWeight: 'bold',
@@ -235,10 +302,8 @@ const styles = StyleSheet.create({
     buttonSm: {
         backgroundColor: '#FFFFFF',
         alignItems: 'center',
-        paddingVertical: 6,
-        borderRadius: 5,
-        borderWidth: 2,
-        borderColor: 'red'
+        paddingVertical: 4,
+        borderRadius: 30,
     }
 
 })
